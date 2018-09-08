@@ -42,16 +42,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entidades\Album.cs" />
+    <Compile Include="Entidades\Amizade.cs" />
     <Compile Include="Entidades\Comentario.cs" />
+    <Compile Include="Entidades\Conversa.cs" />
     <Compile Include="Entidades\Curtida.cs" />
     <Compile Include="Entidades\Foto.cs" />
     <Compile Include="Entidades\Mensagem.cs" />
     <Compile Include="Entidades\Perfil.cs" />
     <Compile Include="Entidades\Postagem.cs" />
     <Compile Include="Interfaces\Repositorios\IAlbumRepositorio.cs" />
+    <Compile Include="Interfaces\Repositorios\IAmizadeRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IComentarioRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\ICurtidaRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IFotoRepositorio.cs" />
+    <Compile Include="Interfaces\Repositorios\IIdentityRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IMensagemRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IPerfilRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IPostagemRepositorio.cs" />

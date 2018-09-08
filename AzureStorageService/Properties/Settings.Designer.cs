@@ -25,10 +25,12 @@ namespace AzureStorageService.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string StorageConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("DefaultEndpointsProtocol=https;AccountName=homegarden;AccountKey=VKJSPIJFd7SMxLwh" +
+            "dxMWvQcuqyvYZINgzPx3Bv+VNm+ptMhZ6VPPkkUpSzXdtBqnU7u1tWk+BI+fJExzoha7mA==;Endpoin" +
+            "tSuffix=core.windows.net")]
+        public string StringConexaoBlob {
             get {
-                return ((string)(this["StorageConnectionString"]));
+                return ((string)(this["StringConexaoBlob"]));
             }
         }
     }

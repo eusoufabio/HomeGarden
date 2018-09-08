@@ -10,11 +10,11 @@ namespace AzureStorageService
 {
     public class ServicosBlob
     {
-        private CloudStorageAccount _cloudStorageAccount;
+        private CloudStorageAccount _contaArmazenamentoAzure;
 
         public ServicosBlob()
         {
-            _cloudStorageAccount = CloudStorageAccount.Parse(AzureStorageService.Properties.Settings.Default.StorageConnectionString);
+            _contaArmazenamentoAzure = CloudStorageAccount.Parse(AzureStorageService.Properties.Settings.Default.StringConexaoBlob);
         }
 
         /// Retorna o endereço da imagem
@@ -24,10 +24,10 @@ namespace AzureStorageService
         /// <param name="inputStream"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public async Task<string> UploadImage(string container, string fileName, System.IO.Stream fileStream, string contentType)
+        public async Task<string> PostarArquivo(string container, string fileName, System.IO.Stream fileStream, string contentType)
         {
             //Classe que faz acesso ao Azure Storage Blob
-            CloudBlobClient ClienteBlob = _cloudStorageAccount.CreateCloudBlobClient();
+            CloudBlobClient ClienteBlob = _contaArmazenamentoAzure.CreateCloudBlobClient();
 
             //Classe que faz referência a um Container
             CloudBlobContainer ContainerBlob = ClienteBlob.GetContainerReference(container);
@@ -36,7 +36,7 @@ namespace AzureStorageService
             await ContainerBlob.CreateIfNotExistsAsync();
 
             //Altera a configuração do container para permitir o acesso anônimo
-            await ContainerBlob.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
+            //await ContainerBlob.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
 
             //Referência a uma imagem
             CloudBlockBlob CloudBlockBlob = ContainerBlob.GetBlockBlobReference(fileName);
@@ -48,7 +48,5 @@ namespace AzureStorageService
             //Blob URL
             return CloudBlockBlob.Uri.ToString();
         }
-
-
     }
 }

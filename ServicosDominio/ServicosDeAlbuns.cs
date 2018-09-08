@@ -9,6 +9,11 @@ namespace ServicosDominio
 {
     public class ServicosDeAlbuns
     {
+        private IAlbumRepositorio _albumRepositorio;
 
+        public ServicosDeAlbuns(IAlbumRepositorio albumRepositorio)
+        {
+            _albumRepositorio = albumRepositorio;
+        }
     }
 }

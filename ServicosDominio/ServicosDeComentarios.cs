@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelosDominio.Interfaces.Repositorios;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,11 @@ namespace ServicosDominio
 {
     public class ServicosDeComentarios
     {
+        private IComentarioRepositorio _comentarioRepositorio;
+
+        public ServicosDeComentarios(IComentarioRepositorio comentarioRepositorio)
+        {
+            _comentarioRepositorio = comentarioRepositorio;
+        }
     }
 }

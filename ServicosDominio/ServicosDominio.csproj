@@ -43,12 +43,14 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicosDeAlbuns.cs" />
+    <Compile Include="ServicosDeAmizades.cs" />
     <Compile Include="ServicosDeComentarios.cs" />
     <Compile Include="ServicosDeCurtidas.cs" />
     <Compile Include="ServicosDeFotos.cs" />
     <Compile Include="ServicosDeMensagens.cs" />
     <Compile Include="ServicosDePerfis.cs" />
     <Compile Include="ServicosDePostagens.cs" />
+    <Compile Include="ServicosDoIdentity.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AcessoDados\AcessoDados.csproj">
