@@ -50,7 +50,7 @@
     <Compile Include="ServicosDeMensagens.cs" />
     <Compile Include="ServicosDePerfis.cs" />
     <Compile Include="ServicosDePostagens.cs" />
-    <Compile Include="ServicosDoIdentity.cs" />
+    <Compile Include="ServicosIdentity.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AcessoDados\AcessoDados.csproj">

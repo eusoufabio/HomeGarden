@@ -23,6 +23,11 @@ namespace ServicosDominio
             _perfilRepositorio.Criar(perfil);
         }
 
+        public void EditarPerfil(Perfil perfil)
+        {
+            _perfilRepositorio.Editar(perfil);
+        }
+
         public void ExcluirPerfil(Guid id)
         {
             _perfilRepositorio.Excluir(id);
@@ -36,6 +41,11 @@ namespace ServicosDominio
         public ICollection<Perfil> GetPerfis(string nome)
         {
             return _perfilRepositorio.GetPerfis(nome);
+        }
+
+        public Guid GetId(string email)
+        {
+            return _perfilRepositorio.GetId(email);
         }
     }
 }

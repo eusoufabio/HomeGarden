@@ -11,9 +11,10 @@ namespace ModelosDominio.Interfaces.Repositorios
     {
         void Criar(Perfil perfil);
         void Excluir(Guid idPerfil);
-        void Alterar(Perfil perfil);
+        void Editar(Perfil perfil);
 
         Perfil GetPerfil(Guid idPerfil);
+        Guid GetId(string email);
         ICollection<Perfil> GetPerfis(string nome = "");
     }
 }

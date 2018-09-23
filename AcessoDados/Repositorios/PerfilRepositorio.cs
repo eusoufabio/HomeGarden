@@ -11,34 +11,76 @@ namespace AcessoDados.Repositorios
 {
     public class PerfilRepositorio : IPerfilRepositorio
     {
-        public void Alterar(Perfil perfil)
+        private readonly string _stringConexaoDados = AcessoDados.Properties.Settings.Default.StringConexaoDados;
+
+        public SqlConnection AbrirConexao(string stringConexao = "")
         {
-            return;
+            if (stringConexao == "")
+                stringConexao = _stringConexaoDados;
+
+            var conexao = new SqlConnection(stringConexao);
+            conexao.Open();
+
+            return conexao;
+        }
+
+        public void Editar(Perfil perfil)
+        {
+            var sqlConnection = AbrirConexao();
+
+            string comando = "UPDATE TB_Perfil SET Nome = @Nome, ";
+            comando += "Sobrenome = @Sobrenome, ";
+            comando += "Nascimento = @Nascimento, ";
+            comando += "Telefone = @Telefone, ";
+            comando += "FotoPerfil = @FotoPerfil, ";
+            comando += "FotoCapa = @FotoCapa ";
+            comando += "WHERE Id = @Id";
+
+            SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@Id", perfil.Id);
+            sqlCommand.Parameters.AddWithValue("@Nome", perfil.Nome);
+            sqlCommand.Parameters.AddWithValue("@Sobrenome", perfil.Sobrenome);
+            sqlCommand.Parameters.AddWithValue("@Nascimento", perfil.Nascimento);
+            sqlCommand.Parameters.AddWithValue("@Telefone", perfil.Telefone);
+            sqlCommand.Parameters.AddWithValue("@FotoPerfil", perfil.FotoPerfil);
+            sqlCommand.Parameters.AddWithValue("@FotoCapa", perfil.FotoCapa);
+
+            sqlCommand.ExecuteNonQuery();
+            sqlConnection.Close();
         }
 
         public void Criar(Perfil perfil)
         {
-            SqlConnection sqlConnection;
-            sqlConnection = new SqlConnection(AcessoDados.Properties.Settings.Default.StringConexaoIdentity);
-            sqlConnection.Open();
+            var sqlConnection = AbrirConexao();
+            try
+            {
 
-            string comando = "INSERT INTO tb_Perfil (IdIdentity, Id, Email) VALUES (@idIdentity, @id, @email)";
-            
-            SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@idIdentity", perfil.IdIdentity);
-            sqlCommand.Parameters.AddWithValue("@id", perfil.Id);
-            sqlCommand.Parameters.AddWithValue("@email", perfil.Email);
+                string comando = "INSERT INTO TB_Perfil (IdConta, Id, Nome, Email) VALUES (@idConta, @id, @Nome, @email)";
 
-            sqlCommand.ExecuteNonQuery();
+                SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
+                sqlCommand.Parameters.AddWithValue("@idConta", perfil.IdConta.ToString());
+                sqlCommand.Parameters.AddWithValue("@id", perfil.Id.ToString());
+                sqlCommand.Parameters.AddWithValue("@Nome", perfil.Nome.ToString());
+                sqlCommand.Parameters.AddWithValue("@email", perfil.Email.ToString());
+
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
         }
 
         public void Atualizar(Perfil perfil)
         {
-            SqlConnection sqlConnection;
-            sqlConnection = new SqlConnection(Properties.Settings.Default.StringConexaoIdentity);
-            sqlConnection.Open();
+            var sqlConnection = AbrirConexao();
 
-            string comando = "UPDATE tb_Perfil SET Nome = @Nome, Sobrenome = @Sobrenome, Nascimento = @Nascimento, Telefone = @Telefone, FotoPerfil = @FotoPerfil, FotoCapa = @FotoCapa WHERE Id = @Id";
+            string comando = "UPDATE TB_Perfil SET Nome = @Nome, Sobrenome = @Sobrenome, Nascimento = @Nascimento, Telefone = @Telefone, FotoPerfil = @FotoPerfil, FotoCapa = @FotoCapa WHERE Id = @Id";
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
 
             sqlCommand.Parameters.AddWithValue("@Id", perfil.Id);
@@ -60,11 +102,9 @@ namespace AcessoDados.Repositorios
 
         public Perfil GetPerfil(Guid idPerfil)
         {
-            SqlConnection sqlConnection;
-            sqlConnection = new SqlConnection(Properties.Settings.Default.StringConexaoIdentity);
-            sqlConnection.Open();
+            var sqlConnection = AbrirConexao();
 
-            string comando = "SELECT * FROM tb_Perfil WHERE Id = @Id";
+            string comando = "SELECT * FROM TB_Perfil WHERE Id = @Id";
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
 
             sqlCommand.Parameters.AddWithValue("@Id", idPerfil);
@@ -74,12 +114,13 @@ namespace AcessoDados.Repositorios
 
             while (reader.Read())
             {
-                perfil.IdIdentity = reader["IdIdentity"].ToString();
-                perfil.Id = (Guid) reader["Id"];
+                perfil.IdConta = reader["IdConta"].ToString();
+                perfil.Id = Guid.Parse(reader["Id"].ToString());
                 perfil.Nome = reader["Nome"].ToString();
                 perfil.Sobrenome = reader["Sobrenome"].ToString();
                 perfil.Email = reader["Email"].ToString();
-                perfil.Nascimento = (DateTime) reader["Nascimento"];
+                //if (reader["Nascimento"] != null)
+                //    perfil.Nascimento = DateTime.Parse(reader["Nascimento"].ToString());
                 perfil.Telefone = reader["Telefone"].ToString();
                 perfil.FotoPerfil = reader["FotoPerfil"].ToString();
                 perfil.FotoCapa = reader["FotoCapa"].ToString();
@@ -92,11 +133,9 @@ namespace AcessoDados.Repositorios
 
         public ICollection<Perfil> GetPerfis(string nome = "")
         {
-            SqlConnection sqlConnection;
-            sqlConnection = new SqlConnection(Properties.Settings.Default.StringConexaoIdentity);
-            sqlConnection.Open();
+            var sqlConnection = AbrirConexao();
 
-            string comando = "SELECT * FROM tb_Perfil WHERE CONCAT(Nome, ' ', Sobrenome) Like '%@Nome%'";
+            string comando = "SELECT * FROM TB_Perfil WHERE CONCAT(Nome, ' ', Sobrenome) Like '%@Nome%'";
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
 
             sqlCommand.Parameters.AddWithValue("@Nome", nome);
@@ -107,7 +146,7 @@ namespace AcessoDados.Repositorios
             while (reader.Read())
             {
                 Perfil perfil = new Perfil();
-                perfil.IdIdentity = reader["IdIdentity"].ToString();
+                perfil.IdConta = reader["IdConta"].ToString();
                 perfil.Id = (Guid)reader["Id"];
                 perfil.Nome = reader["Nome"].ToString();
                 perfil.Sobrenome = reader["Sobrenome"].ToString();
@@ -123,6 +162,30 @@ namespace AcessoDados.Repositorios
             sqlConnection.Close();
 
             return perfis;
+        }
+
+        public Guid GetId(string email)
+        {
+            var sqlConnection = AbrirConexao();
+
+            string comando = "SELECT * FROM TB_Perfil WHERE Email = @Email";
+            SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@Email", email);
+
+            SqlDataReader reader = sqlCommand.ExecuteReader();
+
+            Guid retorno = Guid.Empty;
+
+            if (reader.HasRows)
+            {
+                reader.Read();
+                retorno = new Guid(reader["Id"].ToString());
+            }
+
+            sqlConnection.Close();
+
+            return retorno;
         }
     }
 }

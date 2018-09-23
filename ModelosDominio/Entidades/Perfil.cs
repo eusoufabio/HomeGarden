@@ -8,7 +8,7 @@ namespace ModelosDominio.Entidades
 {
     public class Perfil
     {
-        public string IdIdentity { get; set; }
+        public string IdConta { get; set; }
         public Guid Id { get; set; }
         public string Nome { get; set; }
         public string Sobrenome { get; set; }

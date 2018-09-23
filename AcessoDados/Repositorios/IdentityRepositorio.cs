@@ -12,6 +12,9 @@ namespace AcessoDados.Repositorios
     {
         public string GetId(string email)
         {
+            if (email == null)
+                return "";
+
             SqlConnection sqlConnection;
             //sqlConnection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Fabio\Documents\Final\HomeGarden\HomeGardenWebAPI\App_Data\aspnet-HomeGardenWebAPI-20180901050731.mdf;Integrated Security=True;Connect Timeout=30");
             sqlConnection = new SqlConnection(AcessoDados.Properties.Settings.Default.StringConexaoIdentity);

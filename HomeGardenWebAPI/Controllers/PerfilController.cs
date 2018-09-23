@@ -1,4 +1,6 @@
 ﻿using AcessoDados.Repositorios;
+using ModelosDominio.Entidades;
+using Newtonsoft.Json.Linq;
 using ServicosDominio;
 using System;
 using System.Collections.Generic;
@@ -12,38 +14,51 @@ namespace HomeGardenWebAPI.Controllers
     public class PerfilController : ApiController
     {
 
-        public string GetIdIdentity(string email)
-        {
-            var servicosIdentity = new ServicosDoIdentity(new IdentityRepositorio());
 
-            return servicosIdentity.GetId(email);
-            //return "Foi";
+        [HttpGet]
+        public Perfil Detalhes(Guid id)
+        {
+            var servicoPerfil = new ServicosDePerfis(new PerfilRepositorio());
+            return servicoPerfil.GetPerfil(id);
         }
 
-        // GET: api/Perfil
-        public IEnumerable<string> Get()
+        [HttpGet]
+        public string IdConta(string emaill)
         {
-            return new string[] { "value1", "value2" };
+            var servicosIdentity = new ServicosIdentity(new IdentityRepositorio());
+            return servicosIdentity.GetId(emaill);
+        }
+
+        [HttpPost]
+        public HttpResponseMessage IdPorEmail([FromBody] string email)
+        {
+            var servicoPerfil = new ServicosDePerfis(new PerfilRepositorio());
+            var resposta = new HttpResponseMessage(HttpStatusCode.OK);
+            resposta.Content = new StringContent(servicoPerfil.GetId(email).ToString(), System.Text.Encoding.UTF8, "application/json");
+            return resposta;
+
+            //return servicoPerfil.GetId(email);
         }
 
         // GET: api/Perfil/5
-        public string Get(int id)
+        public ModelosDominio.Entidades.Perfil Get(Guid idPerfil)
         {
-            return "value, não é esse";
+            var servicosPerfil = new ServicosDePerfis(new PerfilRepositorio());
+            return servicosPerfil.GetPerfil(idPerfil);
         }
 
-        // POST: api/Perfil
-        public void Post([FromBody]string value)
-        {
-        }
+        //// POST: api/Perfil
+        //public void Post([FromBody]string value)
+        //{
+        //}
 
         // PUT: api/Perfil/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(Guid id, [FromBody]string value)
         {
         }
 
         // DELETE: api/Perfil/5
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
         }
     }

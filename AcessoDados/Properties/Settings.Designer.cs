@@ -25,9 +25,9 @@ namespace AcessoDados.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Fabio\\Documents\\Fina" +
-            "l\\HomeGarden\\HomeGardenWebAPI\\App_Data\\aspnet-HomeGardenWebAPI-20180901050731.md" +
-            "f;Integrated Security=True;Connect Timeout=30\r\n")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Fábio\\Documents\\Fina" +
+            "l\\HomeGarden\\DB\\ContasHomeGarden.mdf;Integrated Security=True;Connect Timeout=30" +
+            "")]
         public string StringConexaoIdentity {
             get {
                 return ((string)(this["StringConexaoIdentity"]));
@@ -36,7 +36,8 @@ namespace AcessoDados.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Fábio\\Documents\\Fina" +
+            "l\\HomeGarden\\DB\\HomeGarden.mdf;Integrated Security=True;Connect Timeout=30")]
         public string StringConexaoDados {
             get {
                 return ((string)(this["StringConexaoDados"]));

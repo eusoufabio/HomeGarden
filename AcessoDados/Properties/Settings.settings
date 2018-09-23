@@ -3,11 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="StringConexaoIdentity" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Fabio\Documents\Final\HomeGarden\HomeGardenWebAPI\App_Data\aspnet-HomeGardenWebAPI-20180901050731.mdf;Integrated Security=True;Connect Timeout=30
-</Value>
+      <Value Profile="(Default)">Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Fábio\Documents\Final\HomeGarden\DB\ContasHomeGarden.mdf;Integrated Security=True;Connect Timeout=30</Value>
     </Setting>
     <Setting Name="StringConexaoDados" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Fábio\Documents\Final\HomeGarden\DB\HomeGarden.mdf;Integrated Security=True;Connect Timeout=30</Value>
     </Setting>
   </Settings>
 </SettingsFile>

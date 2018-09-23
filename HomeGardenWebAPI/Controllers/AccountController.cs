@@ -128,7 +128,7 @@ namespace HomeGardenWebAPI.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -261,9 +261,9 @@ namespace HomeGardenWebAPI.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -287,7 +287,7 @@ namespace HomeGardenWebAPI.Controllers
         {
             IEnumerable<AuthenticationDescription> descriptions = Authentication.GetExternalAuthenticationTypes();
             List<ExternalLoginViewModel> logins = new List<ExternalLoginViewModel>();
-            
+
             string state;
 
             if (generateState)
@@ -332,23 +332,24 @@ namespace HomeGardenWebAPI.Controllers
             }
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-            
+
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
-                var novoPerfil = new ModelosDominio.Entidades.Perfil();
-
-                var servicosDePerfis = new ServicosDePerfis(new PerfilRepositorio());
-                var servicosIdentity = new ServicosDoIdentity(new IdentityRepositorio());
-                novoPerfil.Email = model.Email;
-                novoPerfil.Id = Guid.NewGuid();
-                novoPerfil.IdIdentity = servicosIdentity.GetId(model.Email);
-
-                servicosDePerfis.CriarPerfil(novoPerfil);
-
-                return Ok();
+                return Ok("Deu erro");
             }
+
+            var novoPerfil = new ModelosDominio.Entidades.Perfil();
+
+            var servicosDePerfis = new ServicosDePerfis(new PerfilRepositorio());
+            var servicosIdentity = new ServicosIdentity(new IdentityRepositorio());
+            novoPerfil.Nome = model.Nome;
+            novoPerfil.Email = model.Email;
+            novoPerfil.Id = Guid.NewGuid();
+            novoPerfil.IdConta = servicosIdentity.GetId(model.Email);
+
+            servicosDePerfis.CriarPerfil(novoPerfil);
 
             return Ok();
         }
@@ -381,7 +382,7 @@ namespace HomeGardenWebAPI.Controllers
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }
